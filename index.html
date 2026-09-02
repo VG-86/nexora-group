@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexora Group — Auditoria de TI, Cibersegurança e Risco Financeiro</title>
+<meta name="description" content="Nexora Group: auditoria de TI, cibersegurança e gestão de risco financeiro para PME em Angola e Portugal.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --deep-blue:#0F172A;
+    --deep-blue-2:#16233d;
+    --gold:#D4AF37;
+    --gold-soft:rgba(212,175,55,.28);
+    --teal:#0EA5E9;
+    --paper:#F1F5F9;
+    --surface:#FFFFFF;
+    --ink:#0F172A;
+    --ink-muted:#475569;
+    --mist:#94A3B8;
+    --line-dark:rgba(212,175,55,.22);
+    --line-light:rgba(15,23,42,.12);
+    --font-display:'Space Grotesk', sans-serif;
+    --font-body:'IBM Plex Sans', sans-serif;
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:var(--font-body);
+    color:var(--ink);
+    background:var(--surface);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:var(--font-display);
+    line-height:1.12;
+    margin:0;
+    font-weight:600;
+  }
+  p{margin:0;}
+  a{color:inherit;}
+  img,svg{display:block;max-width:100%;}
+  ul{list-style:none;margin:0;padding:0;}
+  button{font-family:inherit;cursor:pointer;}
+
+  :focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
+
+  .wrap{
+    max-width:1160px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+  section{padding:120px 0;}
+  @media (max-width:720px){
+    section{padding:80px 0;}
+    .wrap{padding:0 22px;}
+  }
+
+  .eyebrow-free-heading{max-width:640px;}
+  .section-heading h2{font-size:clamp(2rem,3vw + 1rem,2.75rem);}
+  .section-lede{
+    max-width:520px;
+    color:var(--ink-muted);
+    font-size:1.05rem;
+    margin-top:14px;
+  }
+  section.on-dark .section-lede{color:var(--mist);}
+  section.on-dark .section-heading h2{color:var(--surface);}
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{
+    opacity:0;
+    transform:translateY(18px);
+    transition:opacity .7s var(--ease), transform .7s var(--ease);
+  }
+  .reveal.is-visible{opacity:1;transform:none;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .reveal{opacity:1;transform:none;transition:none;}
+    .knot-spin{animation:none !important;}
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    position:fixed;
+    top:0;left:0;right:0;
+    z-index:100;
+    padding:22px 0;
+    transition:padding .35s var(--ease), background .35s var(--ease), box-shadow .35s var(--ease);
+  }
+  header .wrap{display:flex;align-items:center;justify-content:space-between;}
+  header.scrolled{
+    padding:14px 0;
+    background:rgba(15,23,42,.86);
+    backdrop-filter:blur(10px);
+    box-shadow:0 1px 0 var(--line-dark);
+  }
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;}
+  .brand-mark{width:34px;height:34px;flex:none;}
+  .brand-word{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:1.12rem;
+    color:var(--surface);
+    letter-spacing:.01em;
+  }
+  .brand-word span{color:var(--gold);}
+
+  nav.primary-nav{display:flex;align-items:center;gap:36px;}
+  nav.primary-nav a{
+    color:var(--mist);
+    text-decoration:none;
+    font-size:.96rem;
+    transition:color .25s var(--ease);
+  }
+  nav.primary-nav a:hover{color:var(--surface);}
+  .nav-cta{
+    color:var(--deep-blue) !important;
+    background:var(--gold);
+    padding:10px 20px;
+    border-radius:2px;
+    font-weight:500;
+    transition:background .25s var(--ease);
+  }
+  .nav-cta:hover{background:#e3c25a;}
+
+  .menu-toggle{
+    display:none;
+    background:none;border:none;
+    width:32px;height:24px;
+    position:relative;
+  }
+  .menu-toggle span{
+    position:absolute;left:0;right:0;height:2px;background:var(--surface);
+    transition:transform .3s var(--ease), opacity .3s var(--ease);
+  }
+  .menu-toggle span:nth-child(1){top:0;}
+  .menu-toggle span:nth-child(2){top:11px;}
+  .menu-toggle span:nth-child(3){top:22px;}
+  body.nav-open .menu-toggle span:nth-child(1){transform:translateY(11px) rotate(45deg);}
+  body.nav-open .menu-toggle span:nth-child(2){opacity:0;}
+  body.nav-open .menu-toggle span:nth-child(3){transform:translateY(-11px) rotate(-45deg);}
+
+  @media (max-width:860px){
+    nav.primary-nav{
+      position:fixed;
+      inset:0;
+      background:var(--deep-blue);
+      flex-direction:column;
+      justify-content:center;
+      gap:28px;
+      transform:translateX(100%);
+      transition:transform .4s var(--ease);
+    }
+    body.nav-open nav.primary-nav{transform:translateX(0);}
+    nav.primary-nav a{font-size:1.3rem;}
+    .menu-toggle{display:block;z-index:101;}
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    background:var(--deep-blue);
+    color:var(--surface);
+    padding:200px 0 140px;
+    overflow:hidden;
+  }
+  .hero .wrap{
+    display:grid;
+    grid-template-columns:1.15fr .85fr;
+    gap:40px;
+    align-items:center;
+  }
+  .hero h1{
+    font-size:clamp(2.4rem,4vw + 1rem,3.75rem);
+    letter-spacing:-.01em;
+  }
+  .hero .slogan{
+    display:block;
+    margin-top:22px;
+    color:var(--gold);
+    font-family:var(--font-display);
+    font-size:1rem;
+    letter-spacing:.02em;
+  }
+  .hero p.support{
+    margin-top:22px;
+    max-width:480px;
+    color:var(--mist);
+    font-size:1.08rem;
+  }
+  .hero .cta-row{
+    margin-top:38px;
+    display:flex;
+    align-items:center;
+    gap:28px;
+    flex-wrap:wrap;
+  }
+  .btn-primary{
+    background:var(--gold);
+    color:var(--deep-blue);
+    border:none;
+    padding:15px 28px;
+    font-size:1rem;
+    font-weight:500;
+    border-radius:2px;
+    text-decoration:none;
+    display:inline-block;
+    transition:background .25s var(--ease), transform .25s var(--ease);
+  }
+  .btn-primary:hover{background:#e3c25a;transform:translateY(-1px);}
+  .text-link{
+    color:var(--surface);
+    text-decoration:none;
+    border-bottom:1px solid var(--line-dark);
+    padding-bottom:3px;
+    font-size:.98rem;
+    transition:border-color .25s var(--ease);
+  }
+  .text-link:hover{border-color:var(--gold);}
+
+  .knot-stage{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:320px;
+  }
+  .knot-spin{
+    animation:spin 46s linear infinite;
+    transform-origin:50% 50%;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  /* ---------- About ---------- */
+  .about{background:var(--paper);}
+  .about .wrap{
+    display:grid;
+    grid-template-columns:.62fr 1fr;
+    gap:64px;
+    align-items:start;
+  }
+  .portrait-frame{
+    position:relative;
+    aspect-ratio:4/5;
+    background:linear-gradient(155deg, var(--deep-blue), var(--deep-blue-2));
+    border:1px solid var(--gold-soft);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .portrait-frame .initials{
+    font-family:var(--font-display);
+    font-size:4rem;
+    color:var(--gold);
+    letter-spacing:.04em;
+  }
+  .portrait-caption{
+    margin-top:14px;
+    font-size:.9rem;
+    color:var(--ink-muted);
+  }
+  .about-copy p{color:var(--ink-muted);font-size:1.06rem;max-width:560px;}
+  .about-copy p + p{margin-top:18px;}
+  .credentials{
+    margin-top:32px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:0;
+    border-top:1px solid var(--line-light);
+  }
+  .credentials li{
+    padding:16px 22px 16px 0;
+    margin-right:22px;
+    border-bottom:1px solid var(--line-light);
+    font-size:.92rem;
+    color:var(--ink-muted);
+    flex:1 1 220px;
+  }
+
+  /* ---------- Services ---------- */
+  .services{background:var(--deep-blue);color:var(--surface);}
+  .service-list{margin-top:56px;border-top:1px solid var(--line-dark);}
+  .service-row{
+    display:grid;
+    grid-template-columns:56px 1fr;
+    gap:28px;
+    padding:40px 0;
+    border-bottom:1px solid var(--line-dark);
+  }
+  .service-row .glyph{width:44px;height:44px;}
+  .service-row h3{font-size:1.4rem;color:var(--surface);margin-bottom:12px;}
+  .service-row p{color:var(--mist);max-width:600px;}
+  @media (max-width:640px){
+    .service-row{grid-template-columns:1fr;}
+  }
+
+  /* ---------- Results ---------- */
+  .results{background:var(--paper);}
+  .results-note{
+    margin-top:18px;
+    font-size:.92rem;
+    color:var(--ink-muted);
+    font-style:italic;
+    max-width:560px;
+  }
+  .results-grid{
+    margin-top:48px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:var(--line-light);
+  }
+  .result-card{
+    background:var(--surface);
+    padding:34px 30px;
+  }
+  .result-card h3{font-size:1.08rem;margin-bottom:12px;}
+  .result-card p{color:var(--ink-muted);font-size:.96rem;}
+  @media (max-width:820px){
+    .results-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- Contact ---------- */
+  .contact{background:var(--deep-blue);color:var(--surface);}
+  .contact .wrap{
+    display:grid;
+    grid-template-columns:.85fr 1fr;
+    gap:0;
+    background:var(--deep-blue-2);
+    border:1px solid var(--line-dark);
+  }
+  .contact-info,.contact-form{padding:56px 48px;}
+  .contact-info h2{font-size:1.9rem;color:var(--surface);}
+  .contact-info p{color:var(--mist);margin-top:16px;max-width:340px;}
+  .contact-channels{margin-top:32px;}
+  .contact-channels li{margin-bottom:16px;}
+  .contact-channels a{
+    text-decoration:none;
+    color:var(--surface);
+    border-bottom:1px solid var(--line-dark);
+    padding-bottom:2px;
+  }
+  .contact-channels a:hover{border-color:var(--gold);}
+  .contact-channels .label{display:block;font-size:.82rem;color:var(--mist);margin-bottom:3px;}
+
+  .contact-form{background:var(--surface);}
+  .contact-form h3{color:var(--ink);font-size:1.2rem;margin-bottom:24px;}
+  .field{margin-bottom:18px;}
+  .field label{display:block;font-size:.86rem;color:var(--ink-muted);margin-bottom:6px;}
+  .field input,.field textarea{
+    width:100%;
+    border:1px solid var(--line-light);
+    background:var(--paper);
+    padding:12px 14px;
+    font-family:var(--font-body);
+    font-size:.98rem;
+    color:var(--ink);
+  }
+  .field textarea{resize:vertical;min-height:110px;}
+  .submit-btn{
+    background:var(--deep-blue);
+    color:var(--surface);
+    border:none;
+    padding:14px 26px;
+    font-size:.98rem;
+    font-weight:500;
+    width:100%;
+    transition:background .25s var(--ease);
+  }
+  .submit-btn:hover{background:var(--deep-blue-2);}
+  .form-message{
+    margin-top:14px;
+    font-size:.9rem;
+    color:var(--teal);
+    display:none;
+  }
+  .form-message.show{display:block;}
+
+  @media (max-width:820px){
+    .hero .wrap{grid-template-columns:1fr;}
+    .knot-stage{order:-1;min-height:220px;}
+    .about .wrap{grid-template-columns:1fr;}
+    .portrait-frame{max-width:280px;}
+    .contact .wrap{grid-template-columns:1fr;}
+  }
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--deep-blue-2);color:var(--mist);padding:56px 0 32px;}
+  footer .wrap{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    flex-wrap:wrap;
+    gap:32px;
+  }
+  .footer-brand .brand-word{font-size:1.05rem;}
+  .footer-brand p{margin-top:10px;font-size:.86rem;color:var(--mist);max-width:300px;}
+  .footer-social{display:flex;gap:16px;}
+  .footer-social a{
+    width:38px;height:38px;
+    border:1px solid var(--line-dark);
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    transition:border-color .25s var(--ease), background .25s var(--ease);
+  }
+  .footer-social a:hover{border-color:var(--gold);background:rgba(212,175,55,.08);}
+  .footer-social svg{width:16px;height:16px;stroke:var(--surface);}
+  .footer-bottom{
+    margin-top:44px;
+    padding-top:24px;
+    border-top:1px solid var(--line-dark);
+    font-size:.82rem;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+</style>
+</head>
+<body>
+
+<!--
+  NOTA DE IMPLEMENTAÇÃO (remover antes de publicar):
+  1. Secção "Sobre mim": substituir .portrait-frame por uma fotografia real do fundador.
+  2. Secção "Resultados": os três cartões descrevem o tipo de impacto que a Nexora
+     procura gerar — substituir por depoimentos reais assim que existirem clientes,
+     em vez de publicar citações fictícias.
+  3. Secção "Contacto": o número de WhatsApp abaixo é um marcador de posição
+     (+000 000 000 000) — substituir pelo número real da Nexora.
+  4. O formulário de contacto é estático (sem backend). Para receber submissões
+     reais, ligar a um serviço como Formspree, Netlify Forms ou um endpoint próprio.
+  5. Os ícones de redes sociais no rodapé apontam para "#" — substituir pelos
+     perfis reais da Nexora Group.
+-->
+
+<header id="site-header">
+  <div class="wrap">
+    <a href="#hero" class="brand">
+      <svg class="brand-mark" viewBox="0 0 100 100" fill="none">
+        <g stroke="#D4AF37" stroke-width="4" stroke-linecap="round">
+          <path id="loop-header" d="M50 50 C 50 28, 72 22, 78 38 C 82 50, 66 60, 54 54"/>
+          <use href="#loop-header" transform="rotate(120 50 50)"/>
+          <use href="#loop-header" transform="rotate(240 50 50)"/>
+        </g>
+        <circle cx="50" cy="50" r="4" fill="#D4AF37"/>
+      </svg>
+      <span class="brand-word">Nexora <span>Group</span></span>
+    </a>
+
+    <nav class="primary-nav" id="primary-nav">
+      <a href="#sobre">Sobre</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#resultados">Resultados</a>
+      <a href="#contacto" class="nav-cta">Contacto</a>
+    </nav>
+
+    <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero" id="hero">
+    <div class="wrap">
+      <div>
+        <h1 class="reveal">Segurança, conformidade e controlo para as PME que não podem parar.</h1>
+        <span class="slogan reveal">The Nexus of Technology and Financial Intelligence</span>
+        <p class="support reveal">Auditoria de TI, cibersegurança e gestão de risco financeiro para pequenas e médias empresas em Angola e Portugal — com metodologia internacional e acompanhamento próximo.</p>
+        <div class="cta-row reveal">
+          <a href="#contacto" class="btn-primary">Marcar avaliação inicial</a>
+          <a href="#servicos" class="text-link">Conhecer os serviços</a>
+        </div>
+      </div>
+      <div class="knot-stage reveal">
+        <svg class="knot-spin" width="260" height="260" viewBox="0 0 100 100" fill="none">
+          <g stroke="#0EA5E9" stroke-width="1.4" stroke-linecap="round" opacity=".55">
+            <path id="loop-hero-outer" d="M50 50 C 50 14, 86 4, 94 32 C 100 52, 76 68, 58 58"/>
+            <use href="#loop-hero-outer" transform="rotate(120 50 50)"/>
+            <use href="#loop-hero-outer" transform="rotate(240 50 50)"/>
+          </g>
+          <g stroke="#D4AF37" stroke-width="2.6" stroke-linecap="round">
+            <path id="loop-hero-inner" d="M50 50 C 50 28, 72 22, 78 38 C 82 50, 66 60, 54 54"/>
+            <use href="#loop-hero-inner" transform="rotate(120 50 50)"/>
+            <use href="#loop-hero-inner" transform="rotate(240 50 50)"/>
+          </g>
+          <circle cx="50" cy="50" r="3.2" fill="#D4AF37"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="sobre">
+    <div class="wrap">
+      <div>
+        <div class="portrait-frame reveal">
+          <span class="initials">EG</span>
+        </div>
+        <p class="portrait-caption">Fundador, Nexora Group</p>
+      </div>
+      <div class="about-copy">
+        <div class="section-heading reveal">
+          <h2>Sobre mim</h2>
+        </div>
+        <div style="margin-top:22px;" class="reveal">
+          <p>Sou o fundador da Nexora Group. Tenho um Bacharelato em Engenharia Informática, com formação complementar em Gestão de Projectos e Administração de Empresas.</p>
+          <p>Durante sete anos trabalhei na PLAP Comercial, na área de produtos tecnológicos e serviços de TI. Actualmente sou responsável pela gestão da base de dados na Delegação Provincial dos Antigos Combatentes e Veteranos da Pátria do Icolo e Bengo, sob tutela do Ministério da Defesa Nacional.</p>
+          <p>Criei a Nexora Group para trazer às pequenas e médias empresas o mesmo rigor de auditoria de TI, cibersegurança e gestão de risco que normalmente só as grandes organizações conseguem pagar — com uma abordagem próxima e adaptada à realidade angolana e portuguesa.</p>
+        </div>
+        <ul class="credentials reveal">
+          <li>Bacharelato em Engenharia Informática</li>
+          <li>Sete anos em produtos tecnológicos e serviços de TI</li>
+          <li>Gestão de base de dados no sector público</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="services on-dark" id="servicos">
+    <div class="wrap">
+      <div class="section-heading eyebrow-free-heading reveal">
+        <h2>Serviços</h2>
+        <p class="section-lede">Três frentes de trabalho, uma só prioridade: reduzir o risco tecnológico e financeiro da sua empresa.</p>
+      </div>
+
+      <div class="service-list">
+        <div class="service-row reveal">
+          <svg class="glyph" viewBox="0 0 100 100" fill="none">
+            <g stroke="#D4AF37" stroke-width="4" stroke-linecap="round">
+              <path id="loop-s1" d="M50 50 C 50 28, 72 22, 78 38 C 82 50, 66 60, 54 54"/>
+              <use href="#loop-s1" transform="rotate(180 50 50)"/>
+            </g>
+          </svg>
+          <div>
+            <h3>Auditoria de TI e Conformidade</h3>
+            <p>Avaliação completa dos sistemas, infraestrutura e processos, com verificação de conformidade regulatória — incluindo NIS2, ISO 27001 e a legislação angolana de proteção de dados — e um plano de correção claro e priorizado.</p>
+          </div>
+        </div>
+
+        <div class="service-row reveal">
+          <svg class="glyph" viewBox="0 0 100 100" fill="none">
+            <g stroke="#D4AF37" stroke-width="4" stroke-linecap="round">
+              <path d="M50 20 L78 32 V52 C78 68, 66 80, 50 84 C34 80, 22 68, 22 52 V32 Z"/>
+              <path d="M40 52 L47 60 L62 42"/>
+            </g>
+          </svg>
+          <div>
+            <h3>Consultoria em Cibersegurança</h3>
+            <p>Estratégia de proteção de dados, resposta a incidentes e políticas de segurança desenhadas à medida da dimensão e do orçamento real de uma PME — não de uma multinacional.</p>
+          </div>
+        </div>
+
+        <div class="service-row reveal">
+          <svg class="glyph" viewBox="0 0 100 100" fill="none">
+            <g stroke="#D4AF37" stroke-width="4" stroke-linecap="round">
+              <path d="M22 76 L22 24"/>
+              <path d="M22 76 L82 76"/>
+              <path d="M32 76 V56 M48 76 V44 M64 76 V60 M78 76 V34"/>
+              <path d="M32 40 L48 26 L64 38 L80 22"/>
+            </g>
+          </svg>
+          <div>
+            <h3>Gestão de Risco Financeiro</h3>
+            <p>Due diligence, estruturação de risco corporativo e apoio a decisões de investimento e expansão internacional, com particular experiência na relação entre Angola, Portugal e a União Europeia.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="results" id="resultados">
+    <div class="wrap">
+      <div class="section-heading reveal">
+        <h2>Resultados</h2>
+        <p class="results-note">Os três pontos abaixo descrevem o tipo de impacto que a Nexora procura gerar para os seus clientes; publicaremos depoimentos reais assim que os primeiros projectos estiverem concluídos.</p>
+      </div>
+      <div class="results-grid reveal">
+        <div class="result-card">
+          <h3>Conformidade regulatória sem paragens</h3>
+          <p>Planos de conformidade — NIS2, protecção de dados — implementados sem interromper a operação diária da empresa.</p>
+        </div>
+        <div class="result-card">
+          <h3>Redução do risco de incidentes</h3>
+          <p>Auditorias que identificam vulnerabilidades antes de se tornarem incidentes, com um plano de correção realista e priorizado.</p>
+        </div>
+        <div class="result-card">
+          <h3>Decisões de investimento mais seguras</h3>
+          <p>Due diligence financeira e tecnológica que dá às PME a mesma qualidade de informação que as grandes empresas usam para decidir.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contacto">
+    <div class="wrap">
+      <div class="contact-info reveal">
+        <h2>Contacto</h2>
+        <p>Descreva brevemente o contexto da sua empresa — respondemos com os próximos passos para uma primeira avaliação.</p>
+        <ul class="contact-channels">
+          <li>
+            <span class="label">Email institucional</span>
+            <a href="mailto:advisory@nexora-group.com">advisory@nexora-group.com</a>
+          </li>
+          <li>
+            <span class="label">WhatsApp</span>
+            <a href="https://wa.me/000000000000" target="_blank" rel="noopener">Falar agora</a>
+          </li>
+          <li>
+            <span class="label">Presença</span>
+            <span>Angola · Portugal</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="contact-form reveal">
+        <h3>Enviar mensagem</h3>
+        <form id="contact-form">
+          <div class="field">
+            <label for="name">Nome</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="field">
+            <label for="company">Empresa</label>
+            <input type="text" id="company" name="company">
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="field">
+            <label for="message">Mensagem</label>
+            <textarea id="message" name="message" required></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Enviar mensagem</button>
+          <p class="form-message" id="form-message">Obrigado. A sua mensagem foi registada — entraremos em contacto brevemente.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-brand">
+      <span class="brand-word">Nexora <span style="color:#D4AF37;">Group</span></span>
+      <p>The Nexus of Technology and Financial Intelligence</p>
+    </div>
+    <div class="footer-social">
+      <a href="#" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 4h16v16H4z" opacity="0"/><path d="M7 10v7M7 7v.01M12 17v-4.5c0-1.5 1-2.5 2.5-2.5S17 11 17 12.5V17M12 10v7"/></svg>
+      </a>
+      <a href="#" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="4"/><circle cx="12" cy="12" r="3.2"/><circle cx="16.2" cy="7.8" r=".6" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="#" aria-label="X">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 5l14 14M19 5L5 19"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© 2026 Nexora Group. Todos os direitos reservados.</span>
+    <span>advisory@nexora-group.com</span>
+  </div>
+</footer>
+
+<script>
+  // Header shrink on scroll
+  const header = document.getElementById('site-header');
+  const onScroll = () => {
+    if (window.scrollY > 40) header.classList.add('scrolled');
+    else header.classList.remove('scrolled');
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Mobile menu toggle
+  const menuToggle = document.getElementById('menu-toggle');
+  const nav = document.getElementById('primary-nav');
+  menuToggle.addEventListener('click', () => {
+    const open = document.body.classList.toggle('nav-open');
+    menuToggle.setAttribute('aria-expanded', open);
+    menuToggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+  });
+  nav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.body.classList.remove('nav-open');
+      menuToggle.setAttribute('aria-expanded', false);
+    });
+  });
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => io.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('is-visible'));
+  }
+
+  // Contact form (static demo — see implementation note near the top of the HTML)
+  const form = document.getElementById('contact-form');
+  const formMessage = document.getElementById('form-message');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    formMessage.classList.add('show');
+    form.reset();
+  });
+</script>
+
+</body>
+</html>
